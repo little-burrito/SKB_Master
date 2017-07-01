@@ -12,31 +12,70 @@ namespace SKB_Master {
 	public partial class MainForm : Form {
 		public MainForm() {
 			InitializeComponent();
+            clearErrorAndSuccess();
 			if ( Properties.Settings.Default.username == "" ||
 				 Properties.Settings.Default.password == "" ) {
-				showUserCredentialsForm();
-			} else {
-				UpdateUIUserCredentials();
-			}
-		}
+                showUserCredentialsForm();
+                UpdateUIUserCredentials();
+            }
+        }
+
+        delegate void showSuccessCallback( string successText );
+        public void showSuccess( string successText ) {
+            if ( InvokeRequired ) {
+                showSuccessCallback d = new showSuccessCallback( showSuccess );
+                Invoke( d, new object[] { successText } );
+            } else {
+                errorLabel.Visible = false;
+                successLabel.Text = successText;
+                successLabel.Visible = true;
+            }
+        }
+
+        delegate void showErrorCallback( string errorText );
+        public void showError( string errorText ) {
+            if ( InvokeRequired ) {
+                showErrorCallback d = new showErrorCallback( showError );
+                Invoke( d, new object[] { errorText } );
+            } else {
+                successLabel.Visible = false;
+                errorLabel.Text = errorText;
+                errorLabel.Visible = true;
+            }
+        }
+
+        delegate void clearErrorAndSuccessCallback();
+        public void clearErrorAndSuccess() {
+            if ( InvokeRequired ) {
+                clearErrorAndSuccessCallback d = new clearErrorAndSuccessCallback( clearErrorAndSuccess );
+                Invoke( d, new object[] { } );
+            } else {
+                errorLabel.Visible = false;
+                successLabel.Visible = false;
+            }
+        }
 
 
 		public void UpdateUIUserCredentials() { // Thread unsafe
-			label1.Text = Properties.Settings.Default.username;
-			label2.Text = Properties.Settings.Default.password;
+            if ( Properties.Settings.Default.username == "" ||
+				 Properties.Settings.Default.password == "" ) {
+                showError( "Inget användarnamn/lösenord ifyllt" );
+            } else {
+                showSuccess( "Användarnamn och lösenord har uppdaterats" );
+            }
 		}
-		delegate void UpdateUICrawlerResultCallback( string randomText, ushort progress ); // Thread safe
-		public void UpdateUICrawlerResult( string randomText, ushort progress ) {
-			if ( label3.InvokeRequired ) {
+		delegate void UpdateUICrawlerResultCallback( string statusString, ushort progress ); // Thread safe
+		public void UpdateUICrawlerResult( string statusString, ushort progress ) {
+			if ( InvokeRequired ) {
 				UpdateUICrawlerResultCallback d = new UpdateUICrawlerResultCallback( UpdateUICrawlerResult );
-				this.Invoke( d, new object[] { randomText, progress } );
+				Invoke( d, new object[] { statusString, progress } );
 			} else {
-				label3.Text = randomText;
-				progressBar1.Value = progress;
-				if ( progressBar1.Value == 100 ) {
-					progressBar1.Visible = false;
+				status.Text = "Status: " + statusString;
+				statusProgressBar.Value = progress;
+				if ( statusProgressBar.Value == 100 ) {
+					statusProgressBar.Visible = false;
 				} else {
-					progressBar1.Visible = true;
+					statusProgressBar.Visible = true;
 				}
 			}
 		}
@@ -45,10 +84,14 @@ namespace SKB_Master {
 			showUserCredentialsForm();
 		}
 
-		private void showUserCredentialsForm() {
-			UserCredentials userCredentials = new UserCredentials();
+        UserCredentials userCredentials = new UserCredentials();
+        private void showUserCredentialsForm() {
 			userCredentials.setMainForm( this );
-			userCredentials.Show();
+            if ( userCredentials.Visible ) {
+                userCredentials.Activate();
+            } else {
+                userCredentials.ShowDialog();
+            }
 		}
 
 		protected override bool ProcessDialogKey( Keys keyData ) {

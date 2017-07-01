@@ -23,93 +23,105 @@
 		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent() {
-			this.label1 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.credentialsFormButton = new System.Windows.Forms.Button();
-			this.label3 = new System.Windows.Forms.Label();
-			this.progressBar1 = new System.Windows.Forms.ProgressBar();
-			this.status = new System.Windows.Forms.Label();
-			this.SuspendLayout();
-			// 
-			// label1
-			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 11);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(35, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "label1";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 24);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(35, 13);
-			this.label2.TabIndex = 1;
-			this.label2.Text = "label2";
-			// 
-			// credentialsFormButton
-			// 
-			this.credentialsFormButton.Location = new System.Drawing.Point(41, 102);
-			this.credentialsFormButton.Name = "credentialsFormButton";
-			this.credentialsFormButton.Size = new System.Drawing.Size(137, 23);
-			this.credentialsFormButton.TabIndex = 2;
-			this.credentialsFormButton.Text = "&Inloggningsuppgifter";
-			this.credentialsFormButton.UseVisualStyleBackColor = true;
-			this.credentialsFormButton.Click += new System.EventHandler(this.credentialsFormButton_Click);
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(120, 52);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(35, 13);
-			this.label3.TabIndex = 3;
-			this.label3.Text = "label3";
-			// 
-			// progressBar1
-			// 
-			this.progressBar1.Location = new System.Drawing.Point(92, 163);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(100, 23);
-			this.progressBar1.TabIndex = 4;
-			// 
-			// status
-			// 
-			this.status.AutoSize = true;
-			this.status.Location = new System.Drawing.Point(92, 144);
-			this.status.Name = "status";
-			this.status.Size = new System.Drawing.Size(40, 13);
-			this.status.TabIndex = 5;
-			this.status.Text = "Status:";
-			// 
-			// MainForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(284, 261);
-			this.Controls.Add(this.status);
-			this.Controls.Add(this.progressBar1);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.credentialsFormButton);
-			this.Controls.Add(this.label2);
-			this.Controls.Add(this.label1);
-			this.Name = "MainForm";
-			this.Text = "SKB Master";
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.errorLabel = new System.Windows.Forms.Label();
+            this.successLabel = new System.Windows.Forms.Label();
+            this.credentialsFormButton = new System.Windows.Forms.Button();
+            this.statusProgressBar = new System.Windows.Forms.ProgressBar();
+            this.status = new System.Windows.Forms.Label();
+            this.Logo = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // errorLabel
+            // 
+            this.errorLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.errorLabel.ForeColor = System.Drawing.Color.Red;
+            this.errorLabel.Location = new System.Drawing.Point(9, 325);
+            this.errorLabel.Name = "errorLabel";
+            this.errorLabel.Size = new System.Drawing.Size(262, 13);
+            this.errorLabel.TabIndex = 0;
+            this.errorLabel.Text = "label1";
+            this.errorLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // successLabel
+            // 
+            this.successLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.successLabel.ForeColor = System.Drawing.Color.Green;
+            this.successLabel.Location = new System.Drawing.Point(12, 325);
+            this.successLabel.Name = "successLabel";
+            this.successLabel.Size = new System.Drawing.Size(262, 13);
+            this.successLabel.TabIndex = 1;
+            this.successLabel.Text = "label2";
+            this.successLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // credentialsFormButton
+            // 
+            this.credentialsFormButton.Location = new System.Drawing.Point(74, 356);
+            this.credentialsFormButton.Name = "credentialsFormButton";
+            this.credentialsFormButton.Size = new System.Drawing.Size(137, 23);
+            this.credentialsFormButton.TabIndex = 2;
+            this.credentialsFormButton.Text = "&Inloggningsuppgifter";
+            this.credentialsFormButton.UseVisualStyleBackColor = true;
+            this.credentialsFormButton.Click += new System.EventHandler(this.credentialsFormButton_Click);
+            // 
+            // statusProgressBar
+            // 
+            this.statusProgressBar.Location = new System.Drawing.Point(12, 405);
+            this.statusProgressBar.Name = "statusProgressBar";
+            this.statusProgressBar.Size = new System.Drawing.Size(262, 23);
+            this.statusProgressBar.TabIndex = 4;
+            // 
+            // status
+            // 
+            this.status.AutoSize = true;
+            this.status.Location = new System.Drawing.Point(12, 431);
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(40, 13);
+            this.status.TabIndex = 5;
+            this.status.Text = "Status:";
+            // 
+            // Logo
+            // 
+            this.Logo.Image = ((System.Drawing.Image)(resources.GetObject("Logo.Image")));
+            this.Logo.InitialImage = ((System.Drawing.Image)(resources.GetObject("Logo.InitialImage")));
+            this.Logo.Location = new System.Drawing.Point(12, 12);
+            this.Logo.Name = "Logo";
+            this.Logo.Size = new System.Drawing.Size(262, 290);
+            this.Logo.TabIndex = 6;
+            this.Logo.TabStop = false;
+            // 
+            // MainForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Window;
+            this.ClientSize = new System.Drawing.Size(287, 453);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.statusProgressBar);
+            this.Controls.Add(this.credentialsFormButton);
+            this.Controls.Add(this.successLabel);
+            this.Controls.Add(this.errorLabel);
+            this.Controls.Add(this.Logo);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "MainForm";
+            this.Text = "SKB Master";
+            ((System.ComponentModel.ISupportInitialize)(this.Logo)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label errorLabel;
+		private System.Windows.Forms.Label successLabel;
 		private System.Windows.Forms.Button credentialsFormButton;
-		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ProgressBar progressBar1;
+		private System.Windows.Forms.ProgressBar statusProgressBar;
 		private System.Windows.Forms.Label status;
-	}
+        private System.Windows.Forms.PictureBox Logo;
+    }
 }
 

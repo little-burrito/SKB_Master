@@ -5,28 +5,27 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Timers;
+using System.Net;
 
 namespace SKB_Master {
 	public class SysTray : ApplicationContext {
 		NotifyIcon notifyIcon;
-		const double crawlUpdateInterval = 1000.0;
+		const double crawlUpdateInterval = 60000.0; // Milliseconds
 		private static System.Timers.Timer crawlUpdateTimer;
+        private static string loginUrl = "https://www.skb.org/login/";
+        private static string queuePositionsUrl = "https://www.skb.org/mina-sidor/mina-intresseanmalningar/mina-kallelser/";
+        private static string loggedInClass = "Loggedin";
+        private static string notLoggedInClass = "NotLoggedin";
 
 		public SysTray() {
 			MenuItem configMenuItem = new MenuItem( "Visa fönster", new EventHandler( ShowMainFormFromContextMenu ) );
 			MenuItem exitMenuItem = new MenuItem( "Avsluta", new EventHandler( Exit ) );
 
-			NotifyIcon notifyIcon = new NotifyIcon();
+			notifyIcon = new NotifyIcon();
 			notifyIcon.Icon = SKB_Master.Properties.Resources.AppIcon;
 			notifyIcon.ContextMenu = new ContextMenu( new MenuItem[] { configMenuItem, exitMenuItem } );
 			notifyIcon.Visible = true;
 			notifyIcon.MouseDoubleClick += ShowMainFormFromDoubleClick;
-
-			if ( Properties.Settings.Default.username == "" ||
-				 Properties.Settings.Default.password == "" ) {
-				UserCredentials userCredentials = new UserCredentials();
-				userCredentials.ShowDialog();
-			}
 
 			crawlUpdateTimer = new System.Timers.Timer( crawlUpdateInterval );
 			crawlUpdateTimer.Interval = crawlUpdateInterval;
@@ -53,8 +52,12 @@ namespace SKB_Master {
 		}
 
 		void updateSKB( object sender, System.Timers.ElapsedEventArgs e ) {
-			if ( mainForm != null ) {
-				mainForm.UpdateUICrawlerResult( System.DateTime.Now.TimeOfDay.ToString(), 100 );
+            mainForm.UpdateUICrawlerResult( "Starting crawl", 0 );
+
+            HttpWebRequest request = ( HttpWebRequest )WebRequest.Create( loginUrl );
+
+            if ( mainForm != null ) {
+				mainForm.UpdateUICrawlerResult( System.DateTime.Now.TimeOfDay.ToString(), 55 );
 			}
 		}
 
@@ -63,6 +66,7 @@ namespace SKB_Master {
 			// Otherwise it will be left behind until the user mouses over.
 			if ( notifyIcon != null ) {
 				notifyIcon.Visible = false;
+                notifyIcon.Dispose();
 			}
 			Application.Exit();
 		}

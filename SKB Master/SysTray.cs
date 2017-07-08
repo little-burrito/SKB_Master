@@ -10,27 +10,24 @@ using System.Net;
 namespace SKB_Master {
 	public class SysTray : ApplicationContext {
 		NotifyIcon notifyIcon;
-		const double crawlUpdateInterval = 60000.0; // Milliseconds
-		private static System.Timers.Timer crawlUpdateTimer;
-        private static string loginUrl = "https://www.skb.org/login/";
-        private static string queuePositionsUrl = "https://www.skb.org/mina-sidor/mina-intresseanmalningar/mina-kallelser/";
-        private static string loggedInClass = "Loggedin";
-        private static string notLoggedInClass = "NotLoggedin";
+        private Log log;
 
 		public SysTray() {
+            log = new Log( this.GetType().Name );
+            log.AddLog( "Initializing SysTray" );
+
 			MenuItem configMenuItem = new MenuItem( "Visa fönster", new EventHandler( ShowMainFormFromContextMenu ) );
 			MenuItem exitMenuItem = new MenuItem( "Avsluta", new EventHandler( Exit ) );
 
 			notifyIcon = new NotifyIcon();
 			notifyIcon.Icon = SKB_Master.Properties.Resources.AppIcon;
+            notifyIcon.Text = "SKB Master";
 			notifyIcon.ContextMenu = new ContextMenu( new MenuItem[] { configMenuItem, exitMenuItem } );
 			notifyIcon.Visible = true;
 			notifyIcon.MouseDoubleClick += ShowMainFormFromDoubleClick;
 
-			crawlUpdateTimer = new System.Timers.Timer( crawlUpdateInterval );
-			crawlUpdateTimer.Interval = crawlUpdateInterval;
-			crawlUpdateTimer.Enabled = true;
-			crawlUpdateTimer.Elapsed += updateSKB;
+            // TODO: This should be run from here
+            // Scraper scraper = new SKB_Master.Scraper( mainForm ); // Starts immediately
 		}
 
 		MainForm mainForm = new MainForm();
@@ -51,19 +48,11 @@ namespace SKB_Master {
 			ShowMainForm();
 		}
 
-		void updateSKB( object sender, System.Timers.ElapsedEventArgs e ) {
-            mainForm.UpdateUICrawlerResult( "Starting crawl", 0 );
-
-            HttpWebRequest request = ( HttpWebRequest )WebRequest.Create( loginUrl );
-
-            if ( mainForm != null ) {
-				mainForm.UpdateUICrawlerResult( System.DateTime.Now.TimeOfDay.ToString(), 55 );
-			}
-		}
-
 		void Exit( object sender, EventArgs e ) {
-			// We must manually tidy up and remove the icon before we exit.
-			// Otherwise it will be left behind until the user mouses over.
+            // We must manually tidy up and remove the icon before we exit.
+            // Otherwise it will be left behind until the user mouses over.
+            log.AddLog( "Graceful shutdown" );
+            mainForm.CloseAllTrayIcons();
 			if ( notifyIcon != null ) {
 				notifyIcon.Visible = false;
                 notifyIcon.Dispose();

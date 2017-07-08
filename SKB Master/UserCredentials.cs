@@ -19,6 +19,10 @@ namespace SKB_Master {
 			password.Text = Properties.Settings.Default.password;
 		}
 
+        public void setMainForm( MainForm mainForm ) {
+            this.mainForm = mainForm;
+        }
+
 		private void UserCredentials_Load( object sender, EventArgs e ) {
 		}
 
@@ -27,17 +31,13 @@ namespace SKB_Master {
 			Properties.Settings.Default.password = password.Text; // TODO: THIS IS SAVED IN PLAIN-TEXT
 			Properties.Settings.Default.Save();
 			if ( mainForm != null ) {
-				mainForm.UpdateUIUserCredentials();
+				mainForm.UpdateUIUserCredentials(); // TODO: Should make this an event
 			}
 			Close();
 		}
 
 		private void cancel_Click( object sender, EventArgs e ) {
 			Close();
-		}
-
-		public void setMainForm( MainForm mainForm ) {
-			this.mainForm = mainForm;
 		}
 	}
 }

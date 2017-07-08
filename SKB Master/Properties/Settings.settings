@@ -8,8 +8,38 @@
     <Setting Name="password" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="passwordEntropy" Type="System.String" Scope="User">
+    <Setting Name="showAdvanced" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="estimatedInterestMultiplier" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">0.01187</Value>
+    </Setting>
+    <Setting Name="logFileLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">%USERPROFILE%\AppData\Local\SKB_Master\</Value>
+    </Setting>
+    <Setting Name="offersFileLocation" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">%USERPROFILE%\AppData\Local\SKB_Master\</Value>
+    </Setting>
+    <Setting Name="offersFileCopy" Type="System.Collections.Generic.List&lt;SKB_Master.Offer&gt;" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DEBUG" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="loginUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.skb.org/login/</Value>
+    </Setting>
+    <Setting Name="loginSuccessfulUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.skb.org/mina-sidor/</Value>
+    </Setting>
+    <Setting Name="loginFailedUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.skb.org/login/?err=login</Value>
+    </Setting>
+    <Setting Name="queuePlacingsUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://www.skb.org/mina-sidor/mina-intresseanmalningar/mina-kallelser/</Value>
+    </Setting>
+    <Setting Name="scrapeUpdateMillisecondInterval" Type="System.Double" Scope="Application">
+      <Value Profile="(Default)">600000</Value>
     </Setting>
   </Settings>
 </SettingsFile>
